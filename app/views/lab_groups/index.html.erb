@@ -1,0 +1,28 @@
+<h1>Listing lab_groups</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>File folder</th>
+    <th>Lock version</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+  </tr>
+
+<% @lab_groups.each do |lab_group| %>
+  <tr>
+    <td><%=h lab_group.name %></td>
+    <td><%=h lab_group.file_folder %></td>
+    <td><%=h lab_group.lock_version %></td>
+    <td><%=h lab_group.created_at %></td>
+    <td><%=h lab_group.updated_at %></td>
+    <td><%= link_to 'Show', lab_group %></td>
+    <td><%= link_to 'Edit', edit_lab_group_path(lab_group) %></td>
+    <td><%= link_to 'Destroy', lab_group, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New lab_group', new_lab_group_path %>

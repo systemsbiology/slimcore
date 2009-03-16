@@ -1,0 +1,38 @@
+<p>
+  <b>Login:</b>
+  <%=h @user.login %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @user.email %>
+</p>
+
+<p>
+  <b>Firstname:</b>
+  <%=h @user.firstname %>
+</p>
+
+<p>
+  <b>Lastname:</b>
+  <%=h @user.lastname %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @user.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%=h @user.updated_at %>
+</p>
+
+<p>
+  <b>Lock version:</b>
+  <%=h @user.lock_version %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

@@ -1,0 +1,28 @@
+<p>
+  <b>Name:</b>
+  <%=h @lab_group.name %>
+</p>
+
+<p>
+  <b>File folder:</b>
+  <%=h @lab_group.file_folder %>
+</p>
+
+<p>
+  <b>Lock version:</b>
+  <%=h @lab_group.lock_version %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @lab_group.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%=h @lab_group.updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_lab_group_path(@lab_group) %> |
+<%= link_to 'Back', lab_groups_path %>
