@@ -4,7 +4,6 @@ describe LabGroup do
   before(:each) do
     @valid_attributes = {
       :name => "value for name",
-      :file_folder => "value for file_folder",
       :lock_version => 1,
       :created_at => Time.now,
       :updated_at => Time.now
