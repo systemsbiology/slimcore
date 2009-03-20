@@ -2,7 +2,15 @@ class LabGroupsController < ApplicationController
   # GET /lab_groups
   # GET /lab_groups.xml
   def index
-    @lab_groups = LabGroup.all
+    if(params[:user_id])
+      @lab_groups = LabGroup.find(
+        :all,
+        :include => :lab_memberships,
+        :conditions => [ "lab_memberships.user_id = ?", params[:user_id] ]
+      )
+    else
+      @lab_groups = LabGroup.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

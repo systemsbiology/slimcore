@@ -2,7 +2,11 @@ class LabMembershipsController < ApplicationController
   # GET /lab_memberships
   # GET /lab_memberships.xml
   def index
-    @lab_memberships = LabMembership.all
+    if(params[:user_id])
+      @lab_memberships = LabMembership.find(:all, :conditions => {:user_id => params[:user_id]})
+    else
+      @lab_memberships = LabMembership.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

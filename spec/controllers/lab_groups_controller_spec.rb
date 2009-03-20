@@ -8,22 +8,53 @@ describe LabGroupsController do
   
   describe "responding to GET index" do
 
-    it "should expose all lab_groups as @lab_groups" do
-      LabGroup.should_receive(:find).with(:all).and_return([mock_lab_group])
-      get :index
-      assigns[:lab_groups].should == [mock_lab_group]
+    describe "without any parameters" do
+
+      it "should expose all lab_groups as @lab_groups" do
+        LabGroup.should_receive(:find).with(:all).and_return([mock_lab_group])
+        get :index
+        assigns[:lab_groups].should == [mock_lab_group]
+      end
+
+      describe "with mime type of xml" do
+    
+        it "should render all lab_groups as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          LabGroup.should_receive(:find).with(:all).
+            and_return(lab_groups = mock("Array of LabGroups"))
+          lab_groups.should_receive(:to_xml).and_return("generated XML")
+          get :index
+          response.body.should == "generated XML"
+        end
+      
+      end
+
     end
 
-    describe "with mime type of xml" do
-  
-      it "should render all lab_groups as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        LabGroup.should_receive(:find).with(:all).and_return(lab_groups = mock("Array of LabGroups"))
-        lab_groups.should_receive(:to_xml).and_return("generated XML")
-        get :index
-        response.body.should == "generated XML"
+    describe "with a 'user_id' parameter" do
+
+      it "should expose all lab_groups with the specified user_id as @lab_groups" do
+        LabGroup.should_receive(:find).
+          with(:all, :include => :lab_memberships, :conditions => ["lab_memberships.user_id = ?", 3]).
+            and_return([mock_lab_group])
+        get :index, :user_id => 3
+        assigns[:lab_groups].should == [mock_lab_group]
       end
+
+      describe "with mime type of xml" do
     
+        it "should render all lab_groups with the specified user_id as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          LabGroup.should_receive(:find).
+            with(:all, :include => :lab_memberships, :conditions => ["lab_memberships.user_id = ?", 3]).
+            and_return(lab_groups = mock("Array of LabGroups"))
+          lab_groups.should_receive(:to_xml).and_return("generated XML")
+          get :index, :user_id => 3
+          response.body.should == "generated XML"
+        end
+      
+      end      
+
     end
 
   end

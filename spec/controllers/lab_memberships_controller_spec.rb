@@ -8,22 +8,43 @@ describe LabMembershipsController do
   
   describe "responding to GET index" do
 
-    it "should expose all lab_memberships as @lab_memberships" do
-      LabMembership.should_receive(:find).with(:all).and_return([mock_lab_membership])
-      get :index
-      assigns[:lab_memberships].should == [mock_lab_membership]
+    describe "without no parameters" do
+      
+      it "should expose all lab_memberships as @lab_memberships" do
+        LabMembership.should_receive(:find).with(:all).and_return([mock_lab_membership])
+        get :index
+        assigns[:lab_memberships].should == [mock_lab_membership]
+      end
+
+      describe "with mime type of xml" do
+    
+        it "should render all lab_memberships as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          LabMembership.should_receive(:find).with(:all).and_return(lab_memberships = mock("Array of LabMemberships"))
+          lab_memberships.should_receive(:to_xml).and_return("generated XML")
+          get :index
+          response.body.should == "generated XML"
+        end
+      
+      end
+
     end
 
-    describe "with mime type of xml" do
-  
-      it "should render all lab_memberships as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        LabMembership.should_receive(:find).with(:all).and_return(lab_memberships = mock("Array of LabMemberships"))
-        lab_memberships.should_receive(:to_xml).and_return("generated XML")
-        get :index
-        response.body.should == "generated XML"
-      end
+    describe "with a 'user_id' parameter" do
+
+      describe "with mime type of xml" do
     
+        it "should render the lab_memberships with that user_id as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          LabMembership.should_receive(:find).with(:all, :conditions => {:user_id => "3"}).
+            and_return(lab_memberships = mock("Array of LabMemberships"))
+          lab_memberships.should_receive(:to_xml).and_return("generated XML")
+          get :index, :user_id => 3
+          response.body.should == "generated XML"
+        end
+      
+      end
+
     end
 
   end

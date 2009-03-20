@@ -8,22 +8,42 @@ describe UsersController do
   
   describe "responding to GET index" do
 
-    it "should expose all users as @users" do
-      User.should_receive(:find).with(:all).and_return([mock_user])
-      get :index
-      assigns[:users].should == [mock_user]
+    describe "without a 'login' parameter" do
+
+      it "should expose all users as @users" do
+        User.should_receive(:find).with(:all).and_return([mock_user])
+        get :index
+        assigns[:users].should == [mock_user]
+      end
+
+      describe "with mime type of xml" do
+    
+        it "should render all users as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          User.should_receive(:find).with(:all).and_return(users = mock("Array of Users"))
+          users.should_receive(:to_xml).and_return("generated XML")
+          get :index
+          response.body.should == "generated XML"
+        end
+      
+      end
+
     end
 
-    describe "with mime type of xml" do
-  
-      it "should render all users as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        User.should_receive(:find).with(:all).and_return(users = mock("Array of Users"))
-        users.should_receive(:to_xml).and_return("generated XML")
-        get :index
-        response.body.should == "generated XML"
-      end
+    describe "with a 'login' parameter" do
+
+      describe "with mime type of xml" do
     
+        it "should render the user with that login as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          User.should_receive(:find).with(:all, :conditions => {:login => "jsmith"}).and_return(users = [mock_user])
+          users.should_receive(:to_xml).and_return("generated XML")
+          get :index, :login => "jsmith"
+          response.body.should == "generated XML"
+        end
+      
+      end
+
     end
 
   end
