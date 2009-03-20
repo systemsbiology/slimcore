@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/lab_groups/index.html.erb" do
-  include LabGroupsHelper
   
   before(:each) do
     assigns[:lab_groups] = [
