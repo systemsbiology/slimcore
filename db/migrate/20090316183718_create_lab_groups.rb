@@ -2,7 +2,6 @@ class CreateLabGroups < ActiveRecord::Migration
   def self.up
     create_table :lab_groups do |t|
       t.string :name
-      t.string :file_folder
       t.integer :lock_version
 
       t.timestamps

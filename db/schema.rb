@@ -13,7 +13,6 @@ ActiveRecord::Schema.define(:version => 20090316190634) do
 
   create_table "lab_groups", :force => true do |t|
     t.string   "name"
-    t.string   "file_folder"
     t.integer  "lock_version"
     t.datetime "created_at"
     t.datetime "updated_at"
