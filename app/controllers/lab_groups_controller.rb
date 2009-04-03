@@ -8,6 +8,11 @@ class LabGroupsController < ApplicationController
         :include => :lab_memberships,
         :conditions => [ "lab_memberships.user_id = ?", params[:user_id] ]
       )
+    elsif(params[:name])
+      @lab_groups = LabGroup.find(
+        :all,
+        :conditions => {:name => params[:name]}
+      )
     else
       @lab_groups = LabGroup.all
     end

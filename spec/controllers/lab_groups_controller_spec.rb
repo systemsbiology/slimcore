@@ -57,6 +57,31 @@ describe LabGroupsController do
 
     end
 
+    describe "with a 'name' parameter" do
+
+      it "should expose the lab_group with the specified name" do
+        LabGroup.should_receive(:find).
+          with(:all, :conditions => {:name => "Yeast Group"}).
+          and_return([mock_lab_group])
+        get :index, :name => "Yeast Group"
+        assigns[:lab_groups].should == [mock_lab_group]
+      end
+
+      describe "with mime type of xml" do
+    
+        it "should render all lab_groups with the specified user_id as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          LabGroup.should_receive(:find).
+            with(:all, :conditions => {:name => "Yeast Group"}).
+            and_return(lab_groups = [mock_lab_group])
+          lab_groups.should_receive(:to_xml).and_return("generated XML")
+          get :index, :name => "Yeast Group"
+          response.body.should == "generated XML"
+        end
+      
+      end      
+
+    end
   end
 
   describe "responding to GET show" do
