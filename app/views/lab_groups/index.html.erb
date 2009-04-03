@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>File folder</th>
     <th>Lock version</th>
     <th>Created at</th>
     <th>Updated at</th>
@@ -12,7 +11,6 @@
 <% @lab_groups.each do |lab_group| %>
   <tr>
     <td><%=h lab_group.name %></td>
-    <td><%=h lab_group.file_folder %></td>
     <td><%=h lab_group.lock_version %></td>
     <td><%=h lab_group.created_at %></td>
     <td><%=h lab_group.updated_at %></td>
