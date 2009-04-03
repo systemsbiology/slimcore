@@ -1,4 +1,6 @@
 class LabMembershipsController < ApplicationController
+  before_filter :authenticate
+
   # GET /lab_memberships
   # GET /lab_memberships.xml
   def index
