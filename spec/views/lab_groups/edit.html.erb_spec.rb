@@ -6,7 +6,6 @@ describe "/lab_groups/edit.html.erb" do
     assigns[:lab_group] = @lab_group = stub_model(LabGroup,
       :new_record? => false,
       :name => "value for name",
-      :file_folder => "value for file_folder",
       :lock_version => 1
     )
   end
@@ -16,7 +15,6 @@ describe "/lab_groups/edit.html.erb" do
     
     response.should have_tag("form[action=#{lab_group_path(@lab_group)}][method=post]") do
       with_tag('input#lab_group_name[name=?]', "lab_group[name]")
-      with_tag('input#lab_group_file_folder[name=?]', "lab_group[file_folder]")
       with_tag('input#lab_group_lock_version[name=?]', "lab_group[lock_version]")
     end
   end
