@@ -1,0 +1,111 @@
+= Installation example with a fresh Ubuntu 8.04 machine and Apache + Passenger
+
+Although this guide is specific for Ubuntu 8.04, it can also serve as a rough guide for the steps
+necessary using any operating system. There are also many other deployment choices, but Apache with
+Phusion Passenger (mod_rails) is a popular one.
+
+== Prerequisites
+
+== Install Ruby, RubyGems, Rails
+
+    sudo aptitude -y install ruby1.8-dev ruby1.8 ri1.8 rdoc1.8 irb1.8 libreadline-ruby1.8 libruby1.8 libopenssl-ruby sqlite3 libsqlite3-ruby1.8
+    sudo ln -s /usr/bin/ruby1.8 /usr/bin/ruby
+    sudo ln -s /usr/bin/ri1.8 /usr/bin/ri
+    sudo ln -s /usr/bin/rdoc1.8 /usr/bin/rdoc
+    sudo ln -s /usr/bin/irb1.8 /usr/bin/irb
+    wget http://rubyforge.org/frs/download.php/45905/rubygems-1.3.1.tgz
+    tar zxf rubygems-1.3.1.tgz
+    cd rubygems-1.3.1
+    sudo ruby setup.rb
+    sudo ln -s /usr/bin/gem1.8 /usr/bin/gem
+    sudo gem install rails -v=2.3.2
+
+== Install MySQL and bindings for Ruby
+
+Install MySQL server, client and client libraries:
+
+    sudo aptitude -y install mysql-server mysql-client libmysqlclient15-dev
+
+Choose the root password at this point. Then, install the MySQL-Ruby bindings:
+
+    sudo aptitude -y install libmysql-ruby1.8
+
+== Create the necessary databases
+
+Note that I'm doing this the quick and dirty way by using the MySQL admin user, whereas if I were
+going to deploy this in a production environment I would probably want to have a specific MySQL
+user for SLIMseq with limited access rights.
+
+    mysql -u root -p
+
+At the mysql prompt:
+
+    CREATE DATABASE slimcore_production;
+    CREATE DATABASE slimcore_development;
+    CREATE DATABASE slimcore_test;
+    \q
+
+== Install Git
+
+    sudo aptitude -y install git-core
+
+== Install Prerequisite Gems
+
+    sudo aptitude -y install build-essential
+    sudo aptitude -y install libxml2-dev libxslt1-dev
+    sudo gem install ruby-debug json parseexcel rest-client rspec-rails hpricot rubycas-client nokogiri
+
+== Install SLIMseq itself
+
+    sudo mkdir /apps
+    sudo chown notroot:notroot /apps
+    cd /apps/
+    git clone git://github.com/bmarzolf/slimcore.git
+    cd slimcore
+
+Edit the configuration files to reflect your installation-specific information:
+
+    cp config/database.example config/database.yml
+    vim config/database.yml
+    cp config/application.yml.example config/application.yml
+    vim config/application.yml
+
+Load the database and start the server:
+
+    rake db:load
+    script/server
+
+If all is well, you should be able to access the API, for example using curl 
+(assuming the default username and password in application.yml.example):
+
+    curl -H "Accept: application/xml" http://slimbot:test@localhost:3000/users
+
+The response won't have any users since you haven't created any yet, but this 
+will at least indicate SLIMcore is working.
+
+== Install Apache2 and Passenger
+
+    sudo aptitude -y install apache2 apache2.2-common apache2-mpm-prefork apache2-utils libexpat1 ssl-cert apache2-prefork-dev
+    sudo gem install passenger
+    sudo passenger-install-apache2-module
+
+Add the provided lines to /etc/apache2/apache2.conf.
+
+== Configure Apache2 for SLIMseq
+
+    sudo vim /etc/apache2/sites-available/slimcore
+
+Add these lines (in order to use port 3030, you'll have to add 'Listen 3030' in your /etc/apache2/ports.conf):
+
+    <VirtualHost *:3030>
+      ServerName www.yourhost.com
+      DocumentRoot /apps/slimcore/public
+    </VirtualHost>
+
+Enable the new site you've created, disable the default one, and reload the apache configs:
+
+    sudo a2dissite default
+    sudo a2ensite slimcore
+    sudo /etc/init.d/apache2 reload
+
+Now you should be get to SLIMseq at http://www.yourhost.com:3030

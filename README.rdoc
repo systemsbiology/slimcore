@@ -1,0 +1,34 @@
+= SLIMcore
+
+== What is it?
+
+SLIMcore provides a set of web services for managing users, lab groups and 
+lab memberships (associations between users and groups). It can serve as 
+a shared back end for SLIMarray (http://github.com/bmarzolf/slimarray/tree) 
+and SLIMseq (http://github.com/bmarzolf/slimseq/tree). The plugin/engine 
+SLIMcore Authorizer (http://github.com/bmarzolf/slimcore_authorizer/tree) 
+allows drop-in support for SLIMcore.
+
+== How do I install it?
+
+SLIMcore is installed very similarly to any basic Ruby on Rails application. 
+Those familiar with setting up Ruby on Rails applications may find the 
+following sufficient to get it up and running (with Rails itself already 
+installed):
+
+    git clone git://github.com/bmarzolf/slimcore.git
+    cd slimcore
+    # configure database.yml and application.yml
+    rake db:migrate
+    script/server
+
+For a detailed example of how to install SLIMcore on a fresh Ubuntu 8.04 
+machine using Apache2 as a server, see the file named INSTALL.rdoc. 
+Installation on other operating systems should be similar.
+
+== I've installed it, now how do I use it?
+
+SLIMcore is intended for use with ActiveResource, primarily using the SLIMcore 
+Authorizer (http://github.com/bmarzolf/slimcore_authorizer/tree). To adapt it 
+for other uses, that plugin should serve as a basic guide for how to access it.
+Sorry, no API docs yet!
