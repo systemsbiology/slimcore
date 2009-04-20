@@ -1,0 +1,12 @@
+development:
+  perform_authentication: true
+  username: slimbot
+  password: test
+
+test:
+  perform_authentication: false
+
+production:
+  perform_authentication: true
+  username: slimbot
+  password: test
