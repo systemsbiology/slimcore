@@ -6,6 +6,8 @@ class LabMembershipsController < ApplicationController
   def index
     if(params[:user_id])
       @lab_memberships = LabMembership.find(:all, :conditions => {:user_id => params[:user_id]})
+    elsif(params[:lab_group_id])
+      @lab_memberships = LabMembership.find(:all, :conditions => {:lab_group_id => params[:lab_group_id]})
     else
       @lab_memberships = LabMembership.all
     end

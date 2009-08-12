@@ -47,6 +47,23 @@ describe LabMembershipsController do
 
     end
 
+    describe "with a 'lab_group_id' parameter" do
+
+      describe "with mime type of xml" do
+    
+        it "should render the lab_memberships with that user_id as xml" do
+          request.env["HTTP_ACCEPT"] = "application/xml"
+          LabMembership.should_receive(:find).with(:all, :conditions => {:lab_group_id => "3"}).
+            and_return(lab_memberships = mock("Array of LabMemberships"))
+          lab_memberships.should_receive(:to_xml).and_return("generated XML")
+          get :index, :lab_group_id => 3
+          response.body.should == "generated XML"
+        end
+      
+      end
+
+    end
+
   end
 
   describe "responding to GET show" do
