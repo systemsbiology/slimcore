@@ -16,6 +16,7 @@ Those familiar with setting up Ruby on Rails applications may find the
 following sufficient to get it up and running (with Rails itself already 
 installed):
 
+    gem install -v=2.3.2 rails
     git clone git://github.com/bmarzolf/slimcore.git
     cd slimcore
     rake db:migrate
