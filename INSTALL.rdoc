@@ -60,8 +60,9 @@ At the mysql prompt:
     sudo mkdir /apps
     sudo chown notroot:notroot /apps
     cd /apps/
-    git clone git://github.com/bmarzolf/slimcore.git
+    git clone git://github.com/systemsbiology/slimcore.git
     cd slimcore
+    bundle install
 
 Edit the configuration files to reflect your installation-specific information:
 
