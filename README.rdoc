@@ -4,9 +4,9 @@
 
 SLIMcore provides a set of web services for managing users, lab groups and 
 lab memberships (associations between users and groups). It can serve as 
-a shared back end for SLIMarray (http://github.com/bmarzolf/slimarray/tree) 
-and SLIMseq (http://github.com/bmarzolf/slimseq/tree). The plugin/engine 
-SLIMcore Authorizer (http://github.com/bmarzolf/slimcore_authorizer/tree) 
+a shared back end for SLIMarray (http://github.com/systemsbiology/slimarray/tree) 
+and SLIMseq (http://github.com/systemsbiology/slimseq/tree). The plugin/engine 
+SLIMcore Authorizer (http://github.com/systemsbiology/slimcore_authorizer/tree) 
 allows drop-in support for SLIMcore.
 
 == How do I install it?
@@ -23,7 +23,7 @@ following sufficient to get it up and running (with Rails itself already
 installed):
 
     gem install -v=2.3.5 rails
-    git clone git://github.com/bmarzolf/slimcore.git
+    git clone git://github.com/systemsbiology/slimcore.git
     cd slimcore
     rake db:migrate
     script/server
@@ -35,6 +35,6 @@ Installation on other operating systems should be similar.
 == I've installed it, now how do I use it?
 
 SLIMcore is intended for use with ActiveResource, primarily using the SLIMcore 
-Authorizer (http://github.com/bmarzolf/slimcore_authorizer/tree). To adapt it 
+Authorizer (http://github.com/systemsbiology/slimcore_authorizer/tree). To adapt it 
 for other uses, that plugin should serve as a basic guide for how to access it.
 Sorry, no API docs yet!
