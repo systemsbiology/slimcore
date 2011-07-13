@@ -1,8 +1,4 @@
-require 'casserver/authenticators/sql_encrypted'
-
 class User < ActiveRecord::Base
-  include CASServer::Authenticators::SQLEncrypted::EncryptedPassword
-
   has_many :lab_memberships, :dependent => :destroy
   has_many :lab_groups, :through => :lab_memberships
 
