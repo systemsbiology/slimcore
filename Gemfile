@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '2.3.11'
 gem 'mysql', '2.8.1'
+gem 'crypt-isaac', '0.9.1'
 
 group :test, :development do
   gem 'rspec', '1.3.0'

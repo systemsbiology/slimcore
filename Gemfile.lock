@@ -12,6 +12,7 @@ GEM
       activesupport (= 2.3.11)
     activesupport (2.3.11)
     columnize (0.3.4)
+    crypt-isaac (0.9.1)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
     mysql (2.8.1)
@@ -40,6 +41,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  crypt-isaac (= 0.9.1)
   mysql (= 2.8.1)
   rails (= 2.3.11)
   rspec (= 1.3.0)

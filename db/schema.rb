@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090316190634) do
+ActiveRecord::Schema.define(:version => 20110713171555) do
 
   create_table "lab_groups", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20090316190634) do
     t.integer  "lock_version"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "encrypted_password"
+    t.string   "encryption_salt"
   end
 
 end
